@@ -1,6 +1,7 @@
 package com.lt.springdemo.controller;
 
 
+import com.lt.springdemo.dto.PaginationDTO;
 import com.lt.springdemo.dto.QuestionDTO;
 import com.lt.springdemo.mapper.QuestionMapper;
 import com.lt.springdemo.mapper.UserMapper;
@@ -21,30 +22,17 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private UserMapper userMapper;
-
-
-    @Autowired
     private QuestionService questionService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request,Model model) {
+    public String index(
+                        Model model,
+                        @RequestParam(name = "page", defaultValue = "1") Integer page,
+                        @RequestParam(name = "size", defaultValue = "5") Integer size) {
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length != 0) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    String token = cookie.getValue();
-                    User user = userMapper.findByToken(token);
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
-        List<QuestionDTO> questionList = questionService.list();
-        model.addAttribute("questions",questionList);
+
+        PaginationDTO pagination = questionService.list(page, size);
+        model.addAttribute("pagination", pagination);
         return "index";
     }
 
