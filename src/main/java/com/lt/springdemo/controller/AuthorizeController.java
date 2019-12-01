@@ -2,7 +2,6 @@ package com.lt.springdemo.controller;
 
 import com.lt.springdemo.dto.AccessTokenDTO;
 import com.lt.springdemo.dto.GithubUser;
-import com.lt.springdemo.mapper.UserMapper;
 import com.lt.springdemo.model.User;
 import com.lt.springdemo.provider.GithubProvider;
 import com.lt.springdemo.service.UserService;
