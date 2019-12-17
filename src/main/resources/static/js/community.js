@@ -112,3 +112,24 @@ function collapseComments(e) {
         e.classList.add("active");
     }
 }
+
+function selectTag(e) {
+    var value = e.getAttribute("data-tag");
+    var previous = $("#tag").val();
+    //判断该标签是否存在 -1 即不存在
+    if (previous.indexOf(value) == -1) {
+        if (previous) {
+            $("#tag").val(previous + ',' + value);
+        }else {
+            $("#tag").val(value);
+        }
+    }
+}
+
+function showSelectTag() {
+    $("#select-tag").show();
+}
+
+function hideSelectTag() {
+    $("#select-tag").hide();
+}
