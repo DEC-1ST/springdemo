@@ -58,6 +58,15 @@ body {
     display: inline-block;
 }
 
+.publish-tag-tab .btn-label-info {
+    white-space: normal;
+    margin-right: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+    background-color: transparent;
+}
+
 .community-menu {
     display: block;
     color: #999;
@@ -127,4 +136,8 @@ body {
 /* :hover 指针悬浮 */
 .menu .icon:hover {
     color: #499ef3;
+}
+
+.navigation .text-danger {
+    margin-top: 15px;
 }

@@ -28,6 +28,9 @@ public class CommentController {
     public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
                        HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
+        if (user == null && !"true".equals(request.getSession().getAttribute("checkCookies"))) {
+            return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
+        }
         if (user == null) {
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
         }
@@ -43,8 +46,9 @@ public class CommentController {
         comment.setGmtModified(System.currentTimeMillis());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setCommentator(user.getId());
+        comment.setCommentCount(0);
         comment.setLikeCount(0L);
-        commentService.insert(comment);
+        commentService.insert(comment, user);
         return ResultDTO.okOf();
     }
 

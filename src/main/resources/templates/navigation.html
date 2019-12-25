@@ -4,8 +4,8 @@
 
 <body>
 
-<div th:fragment="nav">
-    <nav class="navbar navbar-default">
+<div th:fragment="nav" class="navigation">
+    <nav class="navbar navbar-default navigation">
 
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -16,7 +16,7 @@
                     <span class="sr-only">小黄人社区</span>
                 </button>
                 <a href="/">
-                    <img src="/img/1.jpg">
+                    <img src="/images/1.jpg">
                 </a>
                 <a class="navbar-brand" href="/">小黄人社区</a>
             </div>
@@ -34,6 +34,7 @@
                     <li th:if="${session.user != null}">
                         <a href="/publish">发布</a>
                     </li>
+                    <li><a href="/profile/replies" th:if="${session.user != null}">通知 <span class="badge" th:if="${session.unreadCount != 0}" th:text="${session.unreadCount}"></span></a></li>
                     <li class="dropdown" th:if="${session.user != null}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
@@ -46,7 +47,11 @@
                         </ul>
                     </li>
                     <li th:if="${session.user == null}">
-                        <a href="https://github.com/login/oauth/authorize?client_id=95763b96712674819747&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
+                        <a th:if="${session.checkCookies == 'true'}" href="https://github.com/login/oauth/authorize?client_id=95763b96712674819747&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
+                        <p class="text-danger" th:if="${session.checkCookies == null}">浏览器禁止cookies，无法登录，如已开启点击右侧刷新</p>
+                    </li>
+                    <li>
+                        <a th:if="${session.user == null && session.checkCookies == null}" href="/">刷新</a>
                     </li>
 
                 </ul>

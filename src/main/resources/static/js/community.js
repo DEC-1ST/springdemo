@@ -1,18 +1,28 @@
 /**
  * 提交回复
  */
-function post() {
+function post(e) {
     var questionId = $("#question_id").val();
     var content = $("#comment_content").val();
-    comment2target(questionId, 1, content);
+    comment2target(questionId, 1, content, e);
 }
 
-function comment2target(targetId, type, content) {
+function comment2target(targetId, type, content, e) {
     if (!content) {
         alert("不允许回复空内容");
         return;
     }
+    debugger;
+    var checkCookies = e.getAttribute("checkCookies");
+    if (checkCookies){
+        login(targetId, type, content);
+    }else {
+        alert("当前操作需要登录，浏览器禁用cookies，无法登录");
+    }
 
+}
+
+function login(targetId, type, content) {
     $.ajax({
         type: "POST",
         url: "/comment",
@@ -45,7 +55,7 @@ function comment2target(targetId, type, content) {
 function comment(e) {
     var commentId = e.getAttribute("data-id");
     var content = $("#input-" + commentId).val();
-    comment2target(commentId, 2, content)
+    comment2target(commentId, 2, content, e)
 }
 
 /**
